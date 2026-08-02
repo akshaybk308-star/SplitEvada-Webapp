@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "SplitTab"
+description = "A bill-splitting web app for groups of friends. Users can create groups, log shared expenses with product details and amounts, split costs among members by amount or share, track who paid, and view balances and settlement suggestions across different dates."
+version = "1.0.0"
+id = "artifacts/splits"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18703
+
+[services.development]
+run = "pnpm --filter @workspace/splits run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/splits", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/splits/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18703"
+BASE_PATH = "/"
