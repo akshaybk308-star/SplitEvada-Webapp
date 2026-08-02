@@ -9,12 +9,12 @@ import DonutChart from "../components/charts/DonutChart";
 import StarField from "../components/ui/StarField";
 
 const WAVE_DATA = [
-  { month: "Mar", amount: 8200,  owed: 3100 },
-  { month: "Apr", amount: 12400, owed: 5200 },
-  { month: "May", amount: 9800,  owed: 4100 },
-  { month: "Jun", amount: 14200, owed: 6800 },
-  { month: "Jul", amount: 11000, owed: 4500 },
-  { month: "Aug", amount: 21100, owed: 8800 },
+  { month: "Mar", amount: 0, owed: 0 },
+  { month: "Apr", amount: 0, owed: 0 },
+  { month: "May", amount: 0, owed: 0 },
+  { month: "Jun", amount: 0, owed: 0 },
+  { month: "Jul", amount: 0, owed: 0 },
+  { month: "Aug", amount: 0, owed: 0 },
 ];
 
 const COLORS = ["#7c3aed","#14b8a6","#ec4899","#f59e0b","#84cc16","#06b6d4","#6366f1"];
@@ -54,7 +54,7 @@ export default function Analytics() {
             <p className="text-white/70 text-sm">Total Spending</p>
             <div className="flex items-center gap-1 bg-white/20 rounded-full px-2.5 py-1">
               <TrendingUp size={12} className="text-lime-300" />
-              <span className="text-xs text-lime-300 font-semibold">+18%</span>
+              <span className="text-xs text-lime-300 font-semibold">0%</span>
             </div>
           </div>
           <p className="amount-display text-white mb-2 relative z-10">{formatCurrency(totalSpent)}</p>

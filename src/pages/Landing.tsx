@@ -69,15 +69,15 @@ export default function Landing() {
               <span className="text-white/60 text-sm">Total this month</span>
               <span className="text-xs bg-violet-500/20 text-violet-300 rounded-full px-2.5 py-1 font-medium">August</span>
             </div>
-            <p className="amount-display gradient-text-violet mb-4">₹21,100</p>
+            <p className="amount-display gradient-text-violet mb-4">₹0</p>
             <div className="flex gap-2">
               <div className="flex-1 glass rounded-2xl p-3">
                 <p className="text-xs text-white/50 mb-1">You owe</p>
-                <p className="font-bold text-pink-400">₹3,800</p>
+                <p className="font-bold text-pink-400">₹0</p>
               </div>
               <div className="flex-1 glass rounded-2xl p-3">
                 <p className="text-xs text-white/50 mb-1">Owed to you</p>
-                <p className="font-bold text-lime-400">₹8,000</p>
+                <p className="font-bold text-lime-400">₹0</p>
               </div>
             </div>
           </motion.div>
