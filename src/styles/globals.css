@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  background: #07071a;
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.5); border-radius: 99px; }
+
+.space-bg {
+  background:
+    radial-gradient(ellipse at 10% 15%, rgba(124,58,237,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 85%, rgba(20,184,166,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 40%, rgba(236,72,153,0.07) 0%, transparent 60%),
+    #07071a;
+  min-height: 100vh;
+}
+
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.glass-hover { transition: all 0.25s ease; }
+.glass-hover:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.gradient-violet { background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #a855f7 100%); }
+.gradient-cyan   { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 50%, #06b6d4 100%); }
+.gradient-lime   { background: linear-gradient(135deg, #4d7c0f 0%, #84cc16 50%, #a3e635 100%); }
+.gradient-pink   { background: linear-gradient(135deg, #be185d 0%, #ec4899 50%, #f472b6 100%); }
+
+.gradient-text-violet {
+  background: linear-gradient(135deg, #c4b5fd, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-cyan {
+  background: linear-gradient(135deg, #5eead4, #14b8a6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-lime {
+  background: linear-gradient(135deg, #bef264, #84cc16);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.input-glass {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  color: #f8fafc;
+  outline: none;
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 1rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-glass::placeholder { color: rgba(248,250,252,0.35); }
+.input-glass:focus {
+  border-color: rgba(124,58,237,0.7);
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+}
+
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.pill-btn:active { transform: scale(0.97); }
+.pill-btn-violet {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  box-shadow: 0 8px 30px rgba(124,58,237,0.45);
+}
+.pill-btn-violet:hover {
+  box-shadow: 0 12px 40px rgba(124,58,237,0.65);
+  transform: translateY(-1px);
+}
+.pill-btn-glass {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.arrow-circle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.page-shell {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: 90px;
+  position: relative;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  z-index: 50;
+}
+
+.category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+  color: rgba(248,250,252,0.8);
+}
+.category-chip.active, .category-chip:hover {
+  background: rgba(124,58,237,0.3);
+  border-color: rgba(124,58,237,0.7);
+  color: #f8fafc;
+}
+
+.amount-display {
+  font-size: clamp(2.2rem, 8vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.star {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--dur, 4s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
