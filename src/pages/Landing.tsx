@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import StarField from "../components/ui/StarField";
 import GradientButton from "../components/ui/GradientButton";
+import BlobTextReveal from "../components/ui/BlobTextReveal";
 import { Sparkles, Zap, Shield } from "lucide-react";
 
 export default function Landing() {
@@ -27,8 +28,22 @@ export default function Landing() {
         {/* Hero */}
         <main className="flex-1 flex flex-col justify-center pt-8">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16,1,0.3,1] }}>
-            <p className="text-violet-400 font-semibold text-sm mb-3 tracking-wide uppercase">✦ Expense Splitting</p>
-            <h1 className="text-4xl font-black leading-tight text-white mb-4">
+            <div className="mb-4 h-16 flex items-center justify-start">
+              <BlobTextReveal
+                texts={["SPLITI", "EVADA", "SMART"]}
+                font={{
+                  fontSize: "36px",
+                  fontWeight: 900,
+                  fontFamily: "Inter, sans-serif",
+                  letterSpacing: "-0.03em",
+                }}
+                wipeColor="#a855f7"
+                revealColor="#14b8a6"
+                color="#ffffff"
+                blobSize={10}
+              />
+            </div>
+            <h1 className="text-3xl font-black leading-tight text-white mb-4">
               Everything got<br />
               <span className="gradient-text-violet">way simpler</span> ✦
             </h1>
