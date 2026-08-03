@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import StarField from "../components/ui/StarField";
+import OriginkitAsciiRain from "../components/originkit/ui/ascii-rain";
 import GradientButton from "../components/ui/GradientButton";
 import BlobTextReveal from "../components/ui/BlobTextReveal";
 import { Sparkles, Zap, Shield } from "lucide-react";
@@ -8,8 +9,11 @@ import { Sparkles, Zap, Shield } from "lucide-react";
 export default function Landing() {
   const nav = useNavigate();
   return (
-    <div className="space-bg min-h-screen flex flex-col">
+    <div className="space-bg min-h-screen flex flex-col relative overflow-hidden">
       <StarField count={80} />
+      <div className="absolute inset-0 pointer-events-none opacity-30 z-0">
+        <OriginkitAsciiRain headColor="#a855f7" trailColor="#7c3aed" glyphSize={16} speed={5} />
+      </div>
       <div className="relative z-10 flex flex-col min-h-screen max-w-sm mx-auto w-full px-6">
 
         {/* Header */}
