@@ -3,7 +3,7 @@ export type SplitType = "equal" | "exact" | "percentage";
 export type Currency = "INR" | "USD" | "EUR" | "GBP";
 
 export interface AppUser {
-  id: string; name: string; email?: string; mobile?: string; avatar?: string; currency: Currency;
+  id: string; name: string; email?: string; mobile?: string; avatar?: string; currency: Currency; isAdmin?: boolean;
 }
 export interface GroupMember {
   userId: string; name: string; avatar?: string;

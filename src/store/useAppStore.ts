@@ -5,7 +5,12 @@ import { splitEqually } from "../lib/calculations";
 
 function uid() { return Math.random().toString(36).slice(2, 10); }
 
-export const AUTHORIZED_MEMBERS = [
+export const INITIAL_AUTHORIZED_MEMBERS = [
+  {
+    "mobile": "9961187118",
+    "name": "PEPPER",
+    "isAdmin": true
+  },
   {
     "mobile": "7902385215",
     "name": "ATHULDAS"
@@ -56,13 +61,22 @@ export const AUTHORIZED_MEMBERS = [
   }
 ];
 
+export interface AuthorizedMember {
+  mobile: string;
+  name: string;
+  isAdmin?: boolean;
+}
+
 interface AppState {
   user: AppUser | null;
   isAuth: boolean;
   groups: Group[];
   expenses: Expense[];
   settlements: Settlement[];
+  customMembers: AuthorizedMember[];
   loginMember: (mobile: string, pass: string) => { success: boolean; message?: string };
+  addAuthorizedMember: (mobile: string, name: string) => { success: boolean; message?: string };
+  getAllAuthorizedMembers: () => AuthorizedMember[];
   logout: () => void;
   addGroup: (g: Omit<Group, "id"|"createdAt"|"inviteCode">) => Group;
   joinGroup: (code: string) => Group | null;
@@ -82,11 +96,18 @@ export const useAppStore = create<AppState>()(
       groups: [],
       expenses: [],
       settlements: [],
+      customMembers: [],
+
+      getAllAuthorizedMembers: () => {
+        return [...INITIAL_AUTHORIZED_MEMBERS, ...get().customMembers];
+      },
+
       loginMember: (mobileInput, passInput) => {
         const cleanMobile = mobileInput.replace(/\D/g, "");
         const cleanPass = passInput.trim().toUpperCase();
         
-        const member = AUTHORIZED_MEMBERS.find(
+        const allMembers = get().getAllAuthorizedMembers();
+        const member = allMembers.find(
           m => m.mobile === cleanMobile && m.name === cleanPass
         );
 
@@ -101,13 +122,37 @@ export const useAppStore = create<AppState>()(
           id: `u-${cleanMobile}`,
           name: member.name,
           mobile: member.mobile,
+          isAdmin: member.isAdmin || cleanMobile === "9961187118",
           currency: "INR"
         };
 
         set({ user: userObj, isAuth: true });
         return { success: true };
       },
+
+      addAuthorizedMember: (mobileInput, nameInput) => {
+        const cleanMobile = mobileInput.replace(/\D/g, "");
+        const cleanName = nameInput.trim().toUpperCase();
+
+        if (!cleanMobile || cleanMobile.length < 10) {
+          return { success: false, message: "Please enter a valid 10-digit mobile number" };
+        }
+        if (!cleanName) {
+          return { success: false, message: "Please enter a valid member name" };
+        }
+
+        const allMembers = get().getAllAuthorizedMembers();
+        if (allMembers.some(m => m.mobile === cleanMobile)) {
+          return { success: false, message: "Member with this mobile number already exists" };
+        }
+
+        const newMem: AuthorizedMember = { mobile: cleanMobile, name: cleanName };
+        set(s => ({ customMembers: [...s.customMembers, newMem] }));
+        return { success: true, message: `Added spot member ${cleanName} (${cleanMobile})` };
+      },
+
       logout: () => set({ user: null, isAuth: false }),
+
       addGroup: (g) => {
         const newGroupId = `g-${uid()}`;
         const newGroup: Group = {
@@ -163,6 +208,6 @@ export const useAppStore = create<AppState>()(
       groupSettlements: (gid) => get().settlements.filter(s => s.groupId === gid),
       updateUserName: (name) => set(s => ({ user: s.user ? { ...s.user, name } : null })),
     }),
-    { name: "splitevada-v5" }
+    { name: "splitevada-v6" }
   )
 );
