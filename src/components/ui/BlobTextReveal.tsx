@@ -593,8 +593,8 @@ export default function BlobTextReveal({
     textAlign === "center"
       ? "center"
       : textAlign === "right" || textAlign === "end"
-      ? "flex-end"
-      : "flex-start";
+        ? "flex-end"
+        : "flex-start";
 
   return (
     <div
