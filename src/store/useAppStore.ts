@@ -5,10 +5,64 @@ import { splitEqually } from "../lib/calculations";
 
 function uid() { return Math.random().toString(36).slice(2, 10); }
 
+export const AUTHORIZED_MEMBERS = [
+  {
+    "mobile": "7902385215",
+    "name": "ATHULDAS"
+  },
+  {
+    "mobile": "9495640334",
+    "name": "AKHILJITH"
+  },
+  {
+    "mobile": "7034265672",
+    "name": "ABINAND"
+  },
+  {
+    "mobile": "7025440631",
+    "name": "VISHNUGOKUL"
+  },
+  {
+    "mobile": "9656828077",
+    "name": "JASIM"
+  },
+  {
+    "mobile": "9895579770",
+    "name": "KANNAN"
+  },
+  {
+    "mobile": "7909130049",
+    "name": "ATHULRAVI"
+  },
+  {
+    "mobile": "9539450925",
+    "name": "VYSHAK"
+  },
+  {
+    "mobile": "6235809709",
+    "name": "MANU"
+  },
+  {
+    "mobile": "7559813025",
+    "name": "AMAL"
+  },
+  {
+    "mobile": "8891317670",
+    "name": "AYISHA"
+  },
+  {
+    "mobile": "7736486736",
+    "name": "SACHIN"
+  }
+];
+
 interface AppState {
-  user: AppUser | null; isAuth: boolean;
-  groups: Group[]; expenses: Expense[]; settlements: Settlement[];
-  login: (email: string, name?: string) => void;
+  user: AppUser | null;
+  isAuth: boolean;
+  groups: Group[];
+  expenses: Expense[];
+  settlements: Settlement[];
+  loginMember: (mobile: string, pass: string) => { success: boolean; message?: string };
   logout: () => void;
   addGroup: (g: Omit<Group, "id"|"createdAt"|"inviteCode">) => Group;
   joinGroup: (code: string) => Group | null;
@@ -23,12 +77,36 @@ interface AppState {
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
-      user: null, isAuth: false,
-      groups: [], expenses: [], settlements: [],
-      login: (email, name) => set({
-        user: { id: `u-${uid()}`, name: name ?? email.split("@")[0], email, currency: "INR" },
-        isAuth: true,
-      }),
+      user: null,
+      isAuth: false,
+      groups: [],
+      expenses: [],
+      settlements: [],
+      loginMember: (mobileInput, passInput) => {
+        const cleanMobile = mobileInput.replace(/\D/g, "");
+        const cleanPass = passInput.trim().toUpperCase();
+        
+        const member = AUTHORIZED_MEMBERS.find(
+          m => m.mobile === cleanMobile && m.name === cleanPass
+        );
+
+        if (!member) {
+          return {
+            success: false,
+            message: "Access Denied: Invalid Mobile Number or Password"
+          };
+        }
+
+        const userObj: AppUser = {
+          id: `u-${cleanMobile}`,
+          name: member.name,
+          mobile: member.mobile,
+          currency: "INR"
+        };
+
+        set({ user: userObj, isAuth: true });
+        return { success: true };
+      },
       logout: () => set({ user: null, isAuth: false }),
       addGroup: (g) => {
         const newGroupId = `g-${uid()}`;
@@ -85,6 +163,6 @@ export const useAppStore = create<AppState>()(
       groupSettlements: (gid) => get().settlements.filter(s => s.groupId === gid),
       updateUserName: (name) => set(s => ({ user: s.user ? { ...s.user, name } : null })),
     }),
-    { name: "splitevada-v4" }
+    { name: "splitevada-v5" }
   )
 );
